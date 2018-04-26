@@ -1,0 +1,148 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id = "Triangle" class = "com.karthi.ShapeApp.Shape.imp.Triangle">
+        <!--Constructor injection-->
+        <!--<constructor-arg type="java.lang.String" name="type" value="Equilatral"/>
+        <constructor-arg name="height" value="5"/>-->
+        <constructor-arg index="0" value="Right Angled"/>
+        <constructor-arg index="1" value="9"/>
+        <!--Collections such as list set map can be defined using below tags-->
+        <property name="lines">
+            <list>
+                <ref bean="lineA"/>
+                <ref bean="lineB"/>
+            </list>
+        </property>
+        <!--Setter Injection-->
+        <!--<property name="type" value="Isosceles"/>-->
+    </bean>
+
+    <bean id="lineA" class="com.karthi.ShapeApp.Shape.imp.Line" name="point_to_point_line">
+        <property name="pointA" ref="point_a"/>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="12"/>
+                <property name="y" value="13"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="lineB" class="com.karthi.ShapeApp.Shape.imp.Line" name="point_to_point_line2">
+        <property name="pointA" ref="point_a"/>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="2"/>
+                <property name="y" value="2"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+        <property name="x" value="1"/>
+        <property name="y" value="1"/>
+    </bean>
+
+    <!--Alias-->
+    <alias name="lineA" alias="straightline"/>
+    <!--Alias-->
+
+    <!--Auto wire-->  <!--Scopes are singleton(Default), prototype and web context scopes like request, session and global-session-->
+    <bean id="square" class="com.karthi.ShapeApp.Shape.imp.Square" autowire="byName" scope="prototype"/>
+
+    <bean id="line1" name="line1" class="com.karthi.ShapeApp.Shape.imp.Line">
+        <property name="pointA"> <!--Inner Bean -->
+            <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="1"/>
+                <property name="y" value="1"/>
+            </bean>
+        </property>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="2"/>
+                <property name="y" value="2"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="line2" name="line2" class="com.karthi.ShapeApp.Shape.imp.Line">
+        <property name="pointA"> <!--Inner Bean -->
+            <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="1"/>
+                <property name="y" value="1"/>
+            </bean>
+        </property>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="1"/>
+                <property name="y" value="2"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="line3" name="line3" class="com.karthi.ShapeApp.Shape.imp.Line">
+        <property name="pointA"> <!--Inner Bean -->
+            <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="1"/>
+                <property name="y" value="2"/>
+            </bean>
+        </property>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="2"/>
+                <property name="y" value="1"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="line4" name="line4" class="com.karthi.ShapeApp.Shape.imp.Line">
+        <property name="pointA"> <!--Inner Bean -->
+            <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="2"/>
+                <property name="y" value="1"/>
+            </bean>
+        </property>
+        <property name="pointB"> <!--Inner Bean -->
+            <bean id="point_b" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="2"/>
+                <property name="y" value="2"/>
+            </bean>
+        </property>
+    </bean>
+    <!--Auto wire-->
+
+
+    <!--Bean Inheritance-->
+    <bean id="childline1" class="com.karthi.ShapeApp.Shape.imp.Line" parent="line1">
+        <property name="pointB">
+            <bean id="pointB" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="3"/>
+                <property name="y" value="1"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="childline2" class="com.karthi.ShapeApp.Shape.imp.Line" parent="childline1">
+        <property name="pointA">
+            <bean id="point_a" class="com.karthi.ShapeApp.Shape.imp.Point">
+                <property name="x" value="5"/>
+                <property name="y" value="5"/>
+            </bean>
+        </property>
+    </bean>
+    <!--Bean Inheritance-->
+
+
+    <!--Application Context Aware-->
+    <bean id="testCircle" class="com.karthi.ShapeApp.Shape.imp.Circle">
+        <property name="radius" value="10"/>
+    </bean>
+    <!--Application Context Aware-->
+    <!--We can use the BeanNameAware as well to get the bean with the name defined in the applicationContext.xml or Spring.xml-->
+
+
+</beans>
